@@ -5,13 +5,13 @@
   "description": "Web Extension to sort files in Github pull requests",
   "scripts": {
     "build": "vite build",
-    "watch": "vite build --watch --mode development --minify false",
-    "dev": "vite",
+    "start": "vite build --watch --mode development --minify false",
     "serve:firefox": "web-ext run --start-url \"about:debugging#/runtime/this-firefox\"  --source-dir ./dist/",
     "serve:chrome": "web-ext run -t chromium --start-url \"https://example.com\" --source-dir ./dist/",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky install",
+    "test": "npm run lint && prettier --check .",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
   },

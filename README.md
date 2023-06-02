@@ -13,7 +13,7 @@ Very early development and just barely functional, but needs a lot more love.
 npm install
 
 # build + watch the extension to be loaded in browsers
-npm run watch
+npm start
 
 # (optional) run Storybook to iterate on UI components
 npm run storybook
