@@ -2,17 +2,16 @@ import { minimatch } from "minimatch";
 import browser from "webextension-polyfill";
 import { Entry, Sort, Type } from "../util";
 
-async function sort() {
-  const result = await browser.storage.sync.get("items");
-  const items: Entry[] = result.items ?? [];
-  const fileEls = Array.from(
-    document.querySelectorAll(".js-file[data-tagsearch-path]")
-  );
-  const parent = fileEls[0]?.parentElement;
+const fileEls = Array.from(
+  document.querySelectorAll(".js-file[data-tagsearch-path]")
+);
+const parent = fileEls[0]?.parentElement;
 
+function sort(items: Entry[]) {
   const fallbackIndex = items.findIndex((item) => item.type === Type.Fallback);
-  const grouped = fileEls.reduce((result, file) => {
-    const path = file.getAttribute("data-tagsearch-path");
+
+  const grouped = fileEls.reduce((result, fileEl) => {
+    const path = fileEl.getAttribute("data-tagsearch-path");
     let index = items.findIndex((item: Entry) => {
       if (!path || item.type !== Type.Glob || !item.glob) {
         return false;
@@ -30,20 +29,16 @@ async function sort() {
         result[index] = [];
       }
 
-      result[index].push(file);
+      result[index].push(fileEl);
     }
 
     return result;
   }, [] as Element[][]);
 
   items.forEach((item, index) => {
-    const group = grouped[index];
-    if (group) {
-      group.sort((a, b) => {
-        if (item.sort === Sort.Alphabetical) {
-          return 0;
-        }
-
+    if (item.sort !== Sort.Alphabetical) {
+      const group = grouped[index];
+      group?.sort((a, b) => {
         const aStat = Number(a.querySelector(".diffstat")?.textContent);
         const bStat = Number(b.querySelector(".diffstat")?.textContent);
 
@@ -57,10 +52,15 @@ async function sort() {
   }
 }
 
-sort();
-
-browser.runtime.onMessage.addListener((request) => {
-  if (request.sort) {
-    sort();
+(async () => {
+  const result = await browser.storage.sync.get("items");
+  if (result.items) {
+    sort(result.items);
   }
-});
+
+  browser.runtime.onMessage.addListener((request) => {
+    if (request.items) {
+      sort(request.items);
+    }
+  });
+})();
