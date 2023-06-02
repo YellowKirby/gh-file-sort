@@ -1,0 +1,53 @@
+{
+  "name": "gh-file-sort",
+  "version": "0.1.0",
+  "author": "YellowKirby",
+  "description": "Web Extension to sort files in Github pull requests",
+  "scripts": {
+    "build": "vite build",
+    "watch": "vite build --watch --mode development --minify false",
+    "dev": "vite",
+    "serve:firefox": "web-ext run --start-url \"about:debugging#/runtime/this-firefox\"  --source-dir ./dist/",
+    "serve:chrome": "web-ext run -t chromium --start-url \"https://example.com\" --source-dir ./dist/",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "prepare": "husky install",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "minimatch": "^9.0.1",
+    "svelte-dnd-action": "^0.9.22",
+    "webextension-polyfill": "^0.10.0"
+  },
+  "devDependencies": {
+    "@samrum/vite-plugin-web-extension": "^4.0.0",
+    "@storybook/addon-essentials": "^7.0.14",
+    "@storybook/svelte": "^7.0.14",
+    "@storybook/svelte-vite": "^7.0.14",
+    "@sveltejs/vite-plugin-svelte": "^2.3.0",
+    "@types/webextension-polyfill": "^0.10.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "@typescript-eslint/parser": "^5.59.8",
+    "eslint": "^8.41.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-svelte": "^2.29.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "prettier": "^2.8.8",
+    "prettier-plugin-svelte": "^2.10.1",
+    "storybook": "^7.0.14",
+    "svelte-eslint-parser": "^0.29.0",
+    "svelte-preprocess": "^5.0.3",
+    "typescript": "^5.0.4",
+    "vite": "^4.3.1",
+    "vite-plugin-svelte-svg": "^2.2.1",
+    "web-ext": "^7.6.1"
+  },
+  "lint-staged": {
+    "*.{ts,js,mjs,cjs}": "eslint --fix",
+    "*": "prettier --write --ignore-unknown"
+  }
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <script type="module">
+      import Popup from "./Popup.svelte";
+      import browser from "webextension-polyfill";
+
+      (async () => {
+        const result = await browser.storage.sync.get("items");
+        const popup = new Popup({
+          target: document.body,
+          props: {
+            items: result.items,
+          },
+        });
+        popup.$on("save", async (event) => {
+          await browser.storage.sync.set({
+            items: event.detail.items,
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
