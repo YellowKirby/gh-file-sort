@@ -17,10 +17,22 @@
             items: result.items,
           },
         });
+
         popup.$on("save", async (event) => {
+          const { items } = event.detail;
           await browser.storage.sync.set({
-            items: event.detail.items,
+            items,
           });
+
+          const [tab] = await browser.tabs.query({
+            active: true,
+            lastFocusedWindow: true,
+          });
+          if (tab) {
+            await browser.tabs.sendMessage(tab.id, {
+              items,
+            });
+          }
         });
       })();
     </script>

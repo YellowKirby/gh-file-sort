@@ -14,22 +14,24 @@
 
   let isDragging = false;
 
-  function save(items: Entry[]) {
-    const filtered = items.filter((item) => {
+  function save() {
+    const sanitized = items.filter((item) => {
       const isEmptyGlob = item.type === Type.Glob && !item.glob;
       return !isEmptyGlob;
     });
-    dispatch("save", { items: filtered });
+    dispatch("save", { items: sanitized });
   }
 
   function addItem(index: number) {
     items.splice(index, 0, createEntry({ type: Type.Glob }));
     items = items;
+    save();
   }
 
   function removeItem(index: number) {
     items.splice(index, 1);
     items = items;
+    save();
   }
 
   function consider(event: CustomEvent) {
@@ -40,15 +42,12 @@
   function finalize(event: CustomEvent) {
     isDragging = false;
     items = event.detail.items;
+    save();
   }
 
   function transformDraggedElement(draggedEl?: HTMLElement) {
     draggedEl?.querySelector(".add")?.classList.add("dragging");
   }
-
-  // TODO: this saves on keypress when editing a glob. At least
-  // wait until blur, maybe add a Save button
-  $: save(items);
 </script>
 
 <div class="row headings">
@@ -82,11 +81,11 @@
       <form class="row item">
         <IconDrag />
         {#if item.type === Type.Glob}
-          <input aria-label="Glob" bind:value={item.glob} />
+          <input aria-label="Glob" bind:value={item.glob} on:blur={save} />
         {:else}
           <span>All other files</span>
         {/if}
-        <select aria-label="Sort" bind:value={item.sort}>
+        <select aria-label="Sort" bind:value={item.sort} on:change={save}>
           <option value={Sort.Alphabetical}>Alphabetical (default)</option>
           <option value={Sort.MostChanges}>Most changes</option>
           <option value={Sort.FewestChanges}>Fewest changes</option>
