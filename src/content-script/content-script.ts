@@ -7,17 +7,31 @@ const fileEls = Array.from(
 );
 const parent = fileEls[0]?.parentElement;
 
-function sort(items: Entry[]) {
-  const fallbackIndex = items.findIndex((item) => item.type === Type.Fallback);
+function checkCollapse(fileEl: Element, needsCollapse: boolean): void {
+  const isCollapsed = !fileEl.classList.contains("open");
 
+  if (isCollapsed !== needsCollapse) {
+    const toggle: HTMLElement | null =
+      fileEl.querySelector(".js-details-target");
+    toggle?.click();
+  }
+}
+
+function sort(entries: Entry[]) {
+  const fallbackIndex = entries.findIndex(
+    (entry) => entry.type === Type.Fallback
+  );
+
+  // Primary sort by entry order, but doesn't change the order of 2 files
+  // that belong to the same entry
   const grouped = fileEls.reduce((result, fileEl) => {
     const path = fileEl.getAttribute("data-tagsearch-path");
-    let index = items.findIndex((item: Entry) => {
-      if (!path || item.type !== Type.Glob || !item.glob) {
+    let index = entries.findIndex((entry: Entry) => {
+      if (!path || entry.type !== Type.Glob || !entry.glob) {
         return false;
       }
 
-      return minimatch(path, item.glob);
+      return minimatch(path, entry.glob);
     });
 
     if (index === -1) {
@@ -30,37 +44,38 @@ function sort(items: Entry[]) {
       }
 
       result[index].push(fileEl);
+      checkCollapse(fileEl, entries[index].collapse);
     }
 
     return result;
   }, [] as Element[][]);
 
-  items.forEach((item, index) => {
-    if (item.sort !== Sort.Alphabetical) {
-      const group = grouped[index];
+  // Secondary sort within each entry
+  entries.forEach((entry, index) => {
+    const group = grouped[index];
+
+    if (entry.sort !== Sort.Alphabetical) {
       group?.sort((a, b) => {
         const aStat = Number(a.querySelector(".diffstat")?.textContent);
         const bStat = Number(b.querySelector(".diffstat")?.textContent);
 
-        return item.sort === Sort.MostChanges ? bStat - aStat : aStat - bStat;
+        return entry.sort === Sort.MostChanges ? bStat - aStat : aStat - bStat;
       });
     }
   });
 
-  if (parent) {
-    parent.append(...grouped.flat());
-  }
+  parent?.append(...grouped.flat());
 }
 
 (async () => {
-  const result = await browser.storage.sync.get("items");
-  if (result.items) {
-    sort(result.items);
+  const result = await browser.storage.sync.get("entries");
+  if (result.entries) {
+    sort(result.entries);
   }
 
   browser.runtime.onMessage.addListener((request) => {
-    if (request.items) {
-      sort(request.items);
+    if (request.entries) {
+      sort(request.entries);
     }
   });
 })();
