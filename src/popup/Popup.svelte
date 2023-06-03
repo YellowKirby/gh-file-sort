@@ -7,7 +7,7 @@
   import IconRemove from "../assets/remove.svg?c";
   import IconDrag from "../assets/drag.svg?c";
 
-  export let items: Entry[] = [createEntry({ type: Type.Fallback })];
+  export let entries: Entry[] = [createEntry({ type: Type.Fallback })];
 
   const flipDurationMs = 250;
   const dispatch = createEventDispatcher();
@@ -15,33 +15,33 @@
   let isDragging = false;
 
   function save() {
-    const sanitized = items.filter((item) => {
-      const isEmptyGlob = item.type === Type.Glob && !item.glob;
+    const sanitized = entries.filter((entry) => {
+      const isEmptyGlob = entry.type === Type.Glob && !entry.glob;
       return !isEmptyGlob;
     });
-    dispatch("save", { items: sanitized });
+    dispatch("save", { entries: sanitized });
   }
 
-  function addItem(index: number) {
-    items.splice(index, 0, createEntry({ type: Type.Glob }));
-    items = items;
+  function addEntry(index: number) {
+    entries.splice(index, 0, createEntry({ type: Type.Glob }));
+    entries = entries;
     save();
   }
 
-  function removeItem(index: number) {
-    items.splice(index, 1);
-    items = items;
+  function removeEntry(index: number) {
+    entries.splice(index, 1);
+    entries = entries;
     save();
   }
 
   function consider(event: CustomEvent) {
     isDragging = true;
-    items = event.detail.items;
+    entries = event.detail.items;
   }
 
   function finalize(event: CustomEvent) {
     isDragging = false;
-    items = event.detail.items;
+    entries = event.detail.items;
     save();
   }
 
@@ -60,7 +60,7 @@
   class="add"
   class:dragging={isDragging}
   on:click={() => {
-    addItem(0);
+    addEntry(0);
   }}
 >
   <IconAdd />
@@ -68,7 +68,7 @@
 
 <div
   use:dndzone={{
-    items,
+    items: entries,
     flipDurationMs,
     dropTargetStyle: {},
     transformDraggedElement,
@@ -76,16 +76,16 @@
   on:consider={consider}
   on:finalize={finalize}
 >
-  {#each items as item, index (item.id)}
+  {#each entries as entry, index (entry.id)}
     <div class="card" animate:flip={{ duration: flipDurationMs }}>
-      <form class="row item">
+      <form class="row entry">
         <IconDrag />
-        {#if item.type === Type.Glob}
-          <input aria-label="Glob" bind:value={item.glob} on:blur={save} />
+        {#if entry.type === Type.Glob}
+          <input aria-label="Glob" bind:value={entry.glob} on:blur={save} />
         {:else}
           <span>All other files</span>
         {/if}
-        <select aria-label="Sort" bind:value={item.sort} on:change={save}>
+        <select aria-label="Sort" bind:value={entry.sort} on:change={save}>
           <option value={Sort.Alphabetical}>Alphabetical (default)</option>
           <option value={Sort.MostChanges}>Most changes</option>
           <option value={Sort.FewestChanges}>Fewest changes</option>
@@ -93,14 +93,15 @@
         <input
           aria-label="Collapse"
           type="checkbox"
-          bind:value={item.collapse}
+          bind:checked={entry.collapse}
+          on:change={save}
         />
-        {#if item.type === Type.Glob}
+        {#if entry.type === Type.Glob}
           <button
             aria-label={`Delete row ${index + 1}`}
             class="remove"
             on:click|preventDefault={() => {
-              removeItem(index);
+              removeEntry(index);
             }}
           >
             <IconRemove />
@@ -112,7 +113,7 @@
         class="add"
         class:dragging={isDragging}
         on:click={() => {
-          addItem(index + 1);
+          addEntry(index + 1);
         }}
       >
         <IconAdd />
@@ -148,7 +149,7 @@
     grid-column-start: 2;
   }
 
-  .item {
+  .entry {
     justify-items: stretch;
     align-items: center;
   }

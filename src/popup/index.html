@@ -10,18 +10,18 @@
       import browser from "webextension-polyfill";
 
       (async () => {
-        const result = await browser.storage.sync.get("items");
+        const result = await browser.storage.sync.get("entries");
         const popup = new Popup({
           target: document.body,
           props: {
-            items: result.items,
+            entries: result.entries,
           },
         });
 
         popup.$on("save", async (event) => {
-          const { items } = event.detail;
+          const { entries } = event.detail;
           await browser.storage.sync.set({
-            items,
+            entries,
           });
 
           const [tab] = await browser.tabs.query({
@@ -30,7 +30,7 @@
           });
           if (tab) {
             await browser.tabs.sendMessage(tab.id, {
-              items,
+              entries,
             });
           }
         });
