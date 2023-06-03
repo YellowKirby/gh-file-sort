@@ -9,7 +9,8 @@ export default defineConfig(() => {
   return {
     plugins: [
       webExtension({
-        manifest: getManifest(2),
+        manifest: getManifest(),
+        useDynamicUrlWebAccessibleResources: false,
       }),
       svelte({
         configFile: false,
