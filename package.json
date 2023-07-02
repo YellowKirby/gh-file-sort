@@ -23,7 +23,7 @@
     "webextension-polyfill": "^0.10.0"
   },
   "devDependencies": {
-    "@samrum/vite-plugin-web-extension": "^4.0.0",
+    "@samrum/vite-plugin-web-extension": "^5.0.0",
     "@storybook/addon-essentials": "^7.0.14",
     "@storybook/svelte": "^7.0.14",
     "@storybook/svelte-vite": "^7.0.14",
@@ -39,7 +39,7 @@
     "prettier": "^2.8.8",
     "prettier-plugin-svelte": "^2.10.1",
     "storybook": "^7.0.14",
-    "svelte-eslint-parser": "^0.29.0",
+    "svelte-eslint-parser": "^0.32.0",
     "svelte-preprocess": "^5.0.3",
     "typescript": "^5.0.4",
     "vite": "^4.3.1",
