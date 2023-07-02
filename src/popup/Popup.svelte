@@ -78,7 +78,7 @@
 >
   {#each entries as entry, index (entry.id)}
     <div class="card" animate:flip={{ duration: flipDurationMs }}>
-      <form class="row entry">
+      <form class="row entry" on:submit|preventDefault={save}>
         <IconDrag />
         {#if entry.type === Type.Glob}
           <input aria-label="Glob" bind:value={entry.glob} on:blur={save} />
@@ -98,9 +98,10 @@
         />
         {#if entry.type === Type.Glob}
           <button
+            type="button"
             aria-label={`Delete row ${index + 1}`}
             class="remove"
-            on:click|preventDefault={() => {
+            on:click={() => {
               removeEntry(index);
             }}
           >
