@@ -31,7 +31,7 @@ function sort(entries: Entry[]) {
         return false;
       }
 
-      return minimatch(path, entry.glob);
+      return minimatch(path, entry.glob, { matchBase: true });
     });
 
     if (index === -1) {
