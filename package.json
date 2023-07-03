@@ -11,9 +11,9 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky install",
-    "test": "npm run lint && prettier --check .",
-    "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix"
+    "test": "playwright test",
+    "lint": "eslint . && prettier --check .",
+    "lint:fix": "eslint --fix . && prettier --write ."
   },
   "type": "module",
   "license": "MIT",
@@ -23,6 +23,7 @@
     "webextension-polyfill": "^0.10.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.35.1",
     "@samrum/vite-plugin-web-extension": "^5.0.0",
     "@storybook/addon-essentials": "^7.0.14",
     "@storybook/svelte": "^7.0.14",

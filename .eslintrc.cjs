@@ -26,5 +26,12 @@ module.exports = {
         parser: "@typescript-eslint/parser",
       },
     },
+    {
+      files: ["e2e/*"],
+      rules: {
+        // playwright fixtures/tests require destructured first argument
+        "no-empty-pattern": "off",
+      },
+    },
   ],
 };

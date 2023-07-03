@@ -1,2 +1,4 @@
 dist
 package.json
+playwright-report
+test-results
