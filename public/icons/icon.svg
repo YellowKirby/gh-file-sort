@@ -1,112 +1,16 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="132mm"
-   height="132mm"
-   viewBox="0 0 132 132.00002"
-   version="1.1"
-   id="svg5"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   sodipodi:docname="icon.svg"
-   inkscape:export-filename="icon.png"
-   inkscape:export-xdpi="9.4333496"
-   inkscape:export-ydpi="9.4333496"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview7"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
-     showgrid="false"
-     inkscape:zoom="1.0936888"
-     inkscape:cx="148.57974"
-     inkscape:cy="395.90787"
-     inkscape:window-width="2560"
-     inkscape:window-height="1375"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
-  <defs
-     id="defs2">
-    <marker
-       style="overflow:visible"
-       id="Arrow3"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       inkscape:stockid="Arrow3"
-       markerWidth="3.8987858"
-       markerHeight="6.487"
-       viewBox="0 0 4.2071068 7"
-       inkscape:isstock="true"
-       inkscape:collect="always"
-       preserveAspectRatio="xMidYMid">
-      <path
-         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
-         d="M 3,-3 0,0 3,3"
-         id="arrow3"
-         transform="rotate(180,0.125,0)"
-         sodipodi:nodetypes="ccc" />
-    </marker>
-    <marker
-       style="overflow:visible"
-       id="Arrow3-3"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       inkscape:stockid="Arrow3"
-       markerWidth="3.8987858"
-       markerHeight="6.487"
-       viewBox="0 0 4.2071068 7"
-       inkscape:isstock="true"
-       inkscape:collect="always"
-       preserveAspectRatio="xMidYMid">
-      <path
-         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
-         d="M 3,-3 0,0 3,3"
-         id="arrow3-6"
-         transform="rotate(180,0.125,0)"
-         sodipodi:nodetypes="ccc" />
-    </marker>
-  </defs>
-  <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(-13.29527,-8.728116)">
-    <g
-       id="g6737"
-       transform="translate(1.3782034,1.0038862)">
-      <circle
-         style="fill:#ff7474;fill-opacity:1;stroke:#000000;stroke-width:6.26499;stroke-linecap:square;stroke-linejoin:bevel"
-         id="path1151"
-         cx="99.705307"
-         cy="95.886787"
-         r="39.701061" />
-      <path
-         style="fill:none;stroke:#000000;stroke-width:8.965;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow3-3)"
-         d="m 99.7053,119.3011 c 0,-13.94369 0,-27.887394 0,-41.831084"
-         id="path3298-7" />
-      <circle
-         style="fill:#19dd8a;fill-opacity:1;stroke:#000000;stroke-width:6.26499;stroke-linecap:square;stroke-linejoin:bevel"
-         id="path1151-3"
-         cx="56.128826"
-         cy="51.561672"
-         r="39.701061" />
-      <path
-         style="fill:none;stroke:#000000;stroke-width:8.965;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow3)"
-         d="m 55.94266,30.642355 c 0,13.943691 0,27.887383 0,41.831074"
-         id="path3298" />
+<svg xmlns="http://www.w3.org/2000/svg" width="132mm" height="132mm" viewBox="0 0 132 132">
+    <defs>
+        <marker id="b" markerHeight="6.487" markerWidth="3.899" orient="auto-start-reverse" preserveAspectRatio="xMidYMid" refX="0" refY="0" style="overflow:visible" viewBox="0 0 4.207 7">
+            <path d="M3-3 0 0l3 3" style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round" transform="rotate(180 .125 0)"/>
+        </marker>
+        <marker id="a" markerHeight="6.487" markerWidth="3.899" orient="auto-start-reverse" preserveAspectRatio="xMidYMid" refX="0" refY="0" style="overflow:visible" viewBox="0 0 4.207 7">
+            <path d="M3-3 0 0l3 3" style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round" transform="rotate(180 .125 0)"/>
+        </marker>
+    </defs>
+    <g transform="translate(-11.917 -7.724)">
+        <circle cx="99.705" cy="95.887" r="39.701" style="fill:#ff7474;fill-opacity:1;stroke:#000;stroke-width:6.26499;stroke-linecap:square;stroke-linejoin:bevel"/>
+        <path d="M99.705 119.301V77.47" style="fill:none;stroke:#000;stroke-width:8.965;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#a)"/>
+        <circle cx="56.129" cy="51.562" r="39.701" style="fill:#19dd8a;fill-opacity:1;stroke:#000;stroke-width:6.26499;stroke-linecap:square;stroke-linejoin:bevel"/>
+        <path d="M55.943 30.642v41.831" style="fill:none;stroke:#000;stroke-width:8.965;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#b)"/>
     </g>
-  </g>
 </svg>

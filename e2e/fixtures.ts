@@ -21,7 +21,7 @@ export const test = base.extend<{
   },
   popup: async ({ page }, use) => {
     await page.goto(
-      `chrome-extension://fncgajbgcdgennojcoeoadgekedmkfoc/src/popup/index.html`
+      `chrome-extension://pfaaedppgeajocmfhnjegkelaonbknei/src/popup/index.html`
     );
     await use(page);
   },

@@ -5,14 +5,9 @@ export function getManifest(): chrome.runtime.ManifestV3 {
     manifest_version: 3,
     author: pkg.author,
     description: pkg.description,
-    name: pkg.name,
+    name: "Github Diff Order",
     version: pkg.version,
-    // Dummy key so that we get a stable extension ID for playwright tests.
-    // TODO: Use a real ID if this ever publishes to Chrome Web Store
-    // https://stackoverflow.com/questions/23873623/obtaining-chrome-extension-id-for-development
-    //
-    // extensionId for this key: fncgajbgcdgennojcoeoadgekedmkfoc
-    key: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmtdV/ts5+pcOAM3AP9csVIukGgFBWDLJZQrT4txjNSlqkwzEgQXY28JMyWNm6oa4uHL/eTECy2nDGjWApT2SbrwggD+R+g/a9MvkGlRp5dayUX3B0VHYIqSN1nr/7ErUX0ohaRR46KAd0PN1NK1tYXDnGRRhKNPo+BOH/YP0iRdVOAyUBXUcoWrFXT5vQlBFeuDTfwjE0vhozslxQUDtRpcRJ8QLXKhk7H5fxHVXdDtBN0i89ftPemAOFHB6iNpARJzGfq4+cUaCgbY/CLNrIGbppRZ9c4yf3ziFzpIy1zyIJTkR1Wfh6hl6pv5/YI+CPgRJAybwwGxuBT/ApcT51wIDAQAB",
+    key: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlkwDFPVVEFjg97W3gBz4u4NdrxtVc2mtNcEoqLCfk06JIlnp2qjfQDRGVPS1nkpCoD08GMDnWQpjWh0f6VtWmp+Cmk9dJ7C+m1sQgrl6cBjo5QfAnfbUAjdEFYQQAKftkiN/zsWITUfML35nya3ki1+HMEeKy1ZEUhcD80qhzsvrLLy3+0Dabj1m7oPQyQ7+4bjG6GIz5kxlBLvkBl6JE0W7sLUQ/y6gwyFM9mf8uWfDw1D2YiunWTPtQhlHfG4SFwsHwiltqpE7mAFJyxQvzDw2RUfMMujrFgWP0TuilyB2aT+RORmVkHKBL6OOANre/XWet+xPvWkIdbrWcpBa2QIDAQAB",
     content_scripts: [
       {
         js: ["src/content-script/content-script.ts"],
@@ -22,19 +17,18 @@ export function getManifest(): chrome.runtime.ManifestV3 {
       },
     ],
     icons: {
-      48: "icons/48.png",
+      128: "icons/icon.png",
     },
     action: {
       default_icon: {
-        48: "icons/48.png",
+        128: "icons/icon.png",
       },
       default_popup: "src/popup/index.html",
     },
-    host_permissions: ["*://*/*"],
     permissions: ["storage"],
     browser_specific_settings: {
       gecko: {
-        id: "gh-file-sort@example.com",
+        id: "{eb9647c9-cf86-4052-b65b-c30551922e7b}",
       },
     },
   };

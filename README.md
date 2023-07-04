@@ -1,6 +1,6 @@
-# gh-file-sort
+# Github Diff Order
 
-A browser extension to control the order in which files are displayed in Github pull requests and similar file-comparison views.
+A browser extension to control the order in which files are shown in Github pull requests and comparison views.
 
 ## Status
 
