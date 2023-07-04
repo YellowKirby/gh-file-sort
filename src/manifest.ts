@@ -16,11 +16,11 @@ export function getManifest(): chrome.runtime.ManifestV3 {
       },
     ],
     icons: {
-      48: "icons/48.png",
+      128: "icons/icon.png",
     },
     action: {
       default_icon: {
-        48: "icons/48.png",
+        128: "icons/icon.png",
       },
       default_popup: "src/popup/index.html",
     },
