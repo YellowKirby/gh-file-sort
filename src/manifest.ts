@@ -5,7 +5,7 @@ export function getManifest(): chrome.runtime.ManifestV3 {
     manifest_version: 3,
     author: pkg.author,
     description: pkg.description,
-    name: pkg.name,
+    name: "Github Diff Order",
     version: pkg.version,
     // Dummy key so that we get a stable extension ID for playwright tests.
     // TODO: Use a real ID if this ever publishes to Chrome Web Store

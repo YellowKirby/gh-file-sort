@@ -1,8 +1,8 @@
 {
-  "name": "gh-file-sort",
+  "name": "gh-diff-order",
   "version": "0.1.0",
   "author": "YellowKirby",
-  "description": "Web Extension to sort files in Github pull requests",
+  "description": "Control the order in which files are shown in Github pull requests and comparison views",
   "scripts": {
     "build": "vite build",
     "start": "vite build --watch --mode development --minify false",
