@@ -24,7 +24,6 @@ export function getManifest(): chrome.runtime.ManifestV3 {
       },
       default_popup: "src/popup/index.html",
     },
-    host_permissions: ["*://*/*"],
     permissions: ["storage"],
   };
 }
