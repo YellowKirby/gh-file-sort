@@ -38,7 +38,7 @@ jobs:
       - name: Set outputs
         id: get-vars
         run: |
-          echo "pkg-name=$(npm pkg get name)" >> "$GITHUB_OUTPUT"
+          echo "pkg-name=$(npm pkg get name | tr -d \")" >> "$GITHUB_OUTPUT"
           echo "short-sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
       - name: Save extension zip
         uses: actions/upload-artifact@v3
