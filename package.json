@@ -4,7 +4,7 @@
   "author": "YellowKirby",
   "description": "Control the order in which files are shown in Github pull requests and comparison views",
   "scripts": {
-    "build": "vite build && web-ext build --source-dir dist --artifacts-dir dist",
+    "build": "vite build",
     "start": "vite build --watch --mode development --minify false",
     "serve:firefox": "web-ext run --start-url \"about:debugging#/runtime/this-firefox\"  --source-dir ./dist/",
     "serve:chrome": "web-ext run -t chromium --start-url \"https://example.com\" --source-dir ./dist/",
