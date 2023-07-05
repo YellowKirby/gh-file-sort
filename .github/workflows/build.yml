@@ -1,13 +1,23 @@
-name: CI Build
+name: Build
 
 on:
-  workflow_call:
   push:
     branches: [main]
   pull_request:
     branches: [main]
   schedule:
     - cron: "0 8 * * *"
+  workflow_dispatch:
+    inputs:
+      release-type:
+        description: "Semver version bump type"
+        type: choice
+        default: none
+        options:
+          - none
+          - patch
+          - minor
+          - major
 
 jobs:
   build:
@@ -21,6 +31,27 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      # kinda awkward: we re-use the same job for build and releases
+      # because the release version bump needs to happen before the build
+      # (new build number gets used in the manifest.json) and conditionally
+      # skip releasy steps for regular CI builds.
+      #
+      # alternatives:
+      #   - separate build + release jobs: I think this requires uploading
+      #   an artifact of the entire workspace, because it's not re-used
+      #   between jobs: https://stackoverflow.com/questions/57498605/github-actions-share-workspace-artifacts-between-jobs
+      #
+      #   - separate workflows: Sounds ideal, but same limitation as above... or requires duplication
+      #   or building twice: https://docs.github.com/en/actions/using-workflows/reusing-workflows
+      #
+      #   - composite action for build: seems to work, but the UI hides all the sub-steps :(
+      - name: Bump package.json version (only for releases)
+        if: inputs.release-type && inputs.release-type != 'none'
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          npm version ${{ inputs.release-type }}
 
       - name: Get variables
         id: get-vars
@@ -64,3 +95,11 @@ jobs:
         with:
           name: ${{ steps.get-vars.outputs.pkg-name }}-${{ steps.get-vars.outputs.short-sha }}
           path: dist/
+
+      - name: Push tags (only for releases)
+        if: inputs.release-type && inputs.release-type != 'none'
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ github.token }}
+          branch: ${{ github.ref }}
+          tags: true
