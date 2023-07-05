@@ -12,7 +12,9 @@ on:
       release-type:
         description: "Semver version bump type"
         type: choice
+        default: none
         options:
+          - none (build only)
           - patch
           - minor
           - major
@@ -30,9 +32,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Bump package.json version
-        if: inputs.release-type
-        run: npm version ${{ inputs.release-type }}
+      - name: Bump package.json version (only for releases)
+        if: inputs.release-type && inputs.release-type != 'none'
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          npm version ${{ inputs.release-type }}
 
       - name: Get variables
         id: get-vars
@@ -77,8 +82,8 @@ jobs:
           name: ${{ steps.get-vars.outputs.pkg-name }}-${{ steps.get-vars.outputs.short-sha }}
           path: dist/
 
-      - name: Push changes
-        if: inputs.release-type
+      - name: Push tags (only for releases)
+        if: inputs.release-type && inputs.release-type != 'none'
         uses: ad-m/github-push-action@v0.6.0
         with:
           tags: true
