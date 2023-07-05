@@ -58,6 +58,7 @@ jobs:
           npm version ${{ inputs.release-type || format('{0}-{1}', steps.get-vars.outputs.pkg-version, steps.get-vars.outputs.short-sha) }}
 
       - name: Build extension
+        id: build
         run: npm run build
 
       - name: Run tests
@@ -73,6 +74,7 @@ jobs:
 
       - name: Save extension zip
         uses: actions/upload-artifact@v3
+        if: steps.build.outcome == 'success'
         with:
           name: ${{ steps.get-vars.outputs.pkg-name }}-${{ steps.get-vars.outputs.short-sha }}
           path: dist/
