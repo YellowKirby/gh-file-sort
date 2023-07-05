@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        description: "Semver version bump type"
+        type: choice
+        required: true
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/build.yml
+        with:
+          release-type: ${{ inputs.release-type }}
+
+      - uses: actions/cache/restore@v3
+        with:
+          path: .
+          key: workspace-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Assert cache hit
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: exit 1
+
+      - name: Push tags
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ github.token }}
+          branch: ${{ github.ref }}
+          tags: true
