@@ -1,6 +1,7 @@
 name: CI Build
 
 on:
+  workflow_call:
   push:
     branches: [main]
   pull_request:
@@ -27,9 +28,20 @@ jobs:
         run: npm run build
       - name: Run tests
         run: npm test
-      - uses: actions/upload-artifact@v3
+      - name: Save Playwright results
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+      - name: Set outputs
+        id: get-vars
+        run: |
+          echo "pkg-name=$(npm pkg get name | tr -d \")" >> "$GITHUB_OUTPUT"
+          echo "short-sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Save extension zip
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.get-vars.outputs.pkg-name }}-${{ steps.get-vars.outputs.short-sha }}
+          path: dist/
