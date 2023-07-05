@@ -14,7 +14,7 @@ on:
         type: choice
         default: none
         options:
-          - none (build only)
+          - none
           - patch
           - minor
           - major
