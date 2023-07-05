@@ -12,9 +12,7 @@ on:
       release-type:
         description: "Semver version bump type"
         type: choice
-        default: none
         options:
-          - none
           - patch
           - minor
           - major
@@ -33,7 +31,7 @@ jobs:
         run: npm ci
 
       - name: Bump package.json version
-        if: ${{ inputs.release-type != 'none' }}
+        if: inputs.release-type
         run: npm version ${{ inputs.release-type }}
 
       - name: Get variables
@@ -80,7 +78,7 @@ jobs:
           path: dist/
 
       - name: Push changes
-        if: ${{ inputs.release-type != 'none' }}
+        if: inputs.release-type
         uses: ad-m/github-push-action@v0.6.0
         with:
           tags: true
