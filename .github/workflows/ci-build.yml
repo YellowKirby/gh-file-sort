@@ -18,16 +18,39 @@ jobs:
         with:
           node-version: 18
           cache: "npm"
+
       - name: Install dependencies
         run: npm ci
+
+      - name: Get variables
+        id: get-vars
+        run: |
+          echo "playwright-version=$(npm ls @playwright/test | grep @playwright | sed 's/.*@//')" >> "$GITHUB_OUTPUT"
+          echo "pkg-name=$(npm pkg get name | tr -d \")" >> "$GITHUB_OUTPUT"
+          echo "short-sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright binaries
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.get-vars.outputs.playwright-version }}
+
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        # currently `playwright.config.ts` only uses chromium, but eventually
+        # it'd probably be worth `npx playwright install` to get all supported browsers
+        run: npx playwright install chromium
+
       - name: Lint
         run: npm run lint
+
       - name: Build extension
         run: npm run build
+
       - name: Run tests
         run: npm test
+
       - name: Save Playwright results
         uses: actions/upload-artifact@v3
         if: always()
@@ -35,11 +58,7 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-      - name: Set outputs
-        id: get-vars
-        run: |
-          echo "pkg-name=$(npm pkg get name | tr -d \")" >> "$GITHUB_OUTPUT"
-          echo "short-sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
       - name: Save extension zip
         uses: actions/upload-artifact@v3
         with:
