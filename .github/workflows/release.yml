@@ -26,12 +26,9 @@ jobs:
       - uses: actions/cache/restore@v3
         id: restore-cache
         with:
-          path: .
+          path: ${{ github.workspace }}
           key: workspace-${{ github.run_id }}-${{ github.run_attempt }}
-
-      - name: Assert cache hit
-        if: steps.restore-cache.outputs.cache-hit != 'true'
-        run: exit 1
+          fail-on-cache-miss: true
 
       - name: Push tags
         uses: ad-m/github-push-action@v0.6.0
