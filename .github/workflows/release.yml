@@ -30,6 +30,11 @@ jobs:
           key: workspace-${{ github.run_id }}-${{ github.run_attempt }}
           fail-on-cache-miss: true
 
+      - name: Configure git user
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
       - name: Push tags
         uses: ad-m/github-push-action@v0.6.0
         with:
