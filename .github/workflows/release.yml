@@ -15,22 +15,22 @@ on:
 jobs:
   build:
     uses: ./.github/workflows/build.yml
+    with:
+      release-type: ${{ inputs.release-type }}
 
   release:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          release-type: ${{ inputs.release-type }}
-
       - uses: actions/cache/restore@v3
+        id: restore-cache
         with:
           path: .
           key: workspace-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Assert cache hit
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.restore-cache.outputs.cache-hit != 'true'
         run: exit 1
 
       - name: Push tags

@@ -32,7 +32,7 @@ jobs:
         run: |
           echo "playwright-version=$(npm ls @playwright/test | grep @playwright | sed 's/.*@//')" >> "$GITHUB_OUTPUT"
           echo "pkg-name=$(npm pkg get name | tr -d \")" >> "$GITHUB_OUTPUT"
-          echo "pkg-version=$(npm pkg get version | tr -d \")" >> "$GITHUB_OUTPUT"
+          echo "pkg-version=$(npm pkg get version | sed 's/-.\+//' | tr -d \")" >> "$GITHUB_OUTPUT"
           echo "short-sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Cache Playwright binaries
@@ -79,7 +79,8 @@ jobs:
           name: ${{ steps.get-vars.outputs.pkg-name }}-${{ steps.get-vars.outputs.short-sha }}
           path: dist/
 
-      - uses: actions/cache@v3
+      - uses: actions/cache/save@v3
+        if: ${{ inputs.release-type }}
         with:
           path: ${{ github.workspace }}
           key: workspace-${{ github.run_id }}-${{ github.run_attempt }}
