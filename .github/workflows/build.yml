@@ -53,8 +53,8 @@ jobs:
 
       - name: Bump package.json version
         run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
           npm version ${{ inputs.release-type || format('{0}-{1}', steps.get-vars.outputs.pkg-version, steps.get-vars.outputs.short-sha) }}
 
       - name: Build extension
