@@ -7,12 +7,17 @@ on:
     branches: [main]
   schedule:
     - cron: "0 8 * * *"
-  workflow_call:
+  workflow_dispatch:
     inputs:
       release-type:
         description: "Semver version bump type"
-        type: string
-        required: false
+        type: choice
+        default: none
+        options:
+          - none
+          - patch
+          - minor
+          - major
 
 jobs:
   build:
@@ -51,10 +56,10 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Bump package.json version
+      - name: Set package and manifest version
         run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           npm version ${{ inputs.release-type || format('{0}-{1}', steps.get-vars.outputs.pkg-version, steps.get-vars.outputs.short-sha) }}
 
       - name: Build extension
@@ -79,8 +84,6 @@ jobs:
           name: ${{ steps.get-vars.outputs.pkg-name }}-${{ steps.get-vars.outputs.short-sha }}
           path: dist/
 
-      - uses: actions/cache/save@v3
-        if: ${{ inputs.release-type }}
-        with:
-          path: ${{ github.workspace }}
-          key: workspace-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Push tags (only for releases)
+        if: inputs.release-type && inputs.release-type != 'none'
+        run: git push --follow-tags
